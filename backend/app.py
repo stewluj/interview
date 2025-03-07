@@ -8,14 +8,14 @@ app = Flask(__name__)
 CORS(app)
 client = OpenAI(api_key="your_openai_api_key")  # Replace with your OpenAI key
 
-questions = ["Should AI be allowed in schools? Why or why not?"]
+questions = ["What are the benefits and drawbacks of AI in education?"]
 
 def generate_followup_question(response_text):
-    prompt = f"Analyze this response and generate a follow-up question: {response_text}"
+    prompt = f"Analyze this response and generate a relevant follow-up question to further test understanding: {response_text}"
     completion = client.chat.completions.create(
         model="gpt-4",
         messages=[
-            {"role": "system", "content": "You are an AI debate instructor."},
+            {"role": "system", "content": "You are an AI interviewer conducting an exam or mock interview."},
             {"role": "user", "content": prompt}
         ]
     )
@@ -51,4 +51,4 @@ def receive_audio():
     return jsonify({"transcribed_response": response_text, "next_question": next_question})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=10000)
